@@ -22,9 +22,7 @@ The paper setting uses `alpha = 0.20`. `s_E` is a fixed RMS-based calibration fa
 
 ## Paper training schedule
 
-The default reproduction runner uses the manuscript seeds **666, 2026, and 7777**.
-
-1. Train the ResNet-50 source model (or supply the released source checkpoint).
+1. Train the ResNet-50 source model.
 2. Train the MVL-like model for 50 epochs.
 3. Build a training-only out-of-fold confuser map used by the auxiliary margin objective.
 4. Train the standalone ENTO-like model for 12 epochs with the backbone frozen.
@@ -33,7 +31,7 @@ The default reproduction runner uses the manuscript seeds **666, 2026, and 7777*
 
 The final joint-training code retains the auxiliary objectives used in the reported all-class experiments: final classification loss, ENTO auxiliary classification, an OOF confuser margin, source-margin preservation, source-error repair, soft-region overlap regularization, and residual L2 regularization. None of these terms removes classes from the final decision space.
 
-## Reproduce the three-seed CUB experiment
+## Reproduce the CUB experiment
 
 ```bash
 python scripts/run_experiments.py \
@@ -42,8 +40,6 @@ python scripts/run_experiments.py \
   --clean-checkpoint /path/to/resnet50_source.pth \
   --output-root outputs
 ```
-
-The runner defaults to `--seeds 666,2026,7777`.
 
 Final checkpoints are written to:
 

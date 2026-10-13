@@ -1,0 +1,36 @@
+{
+  "version": "2.0-all-class",
+  "image_size": 448,
+  "seeds": [666, 2026, 7777],
+  "architecture": {
+    "ENTO_input": "f2 = ResNet50 layer2 output (512 channels)",
+    "base_logits": "z_base = classifier(GAP(f4))",
+    "ENTO_like": "standalone class scores plus bounded residual Delta_E",
+    "MVL_like": "M = z_base + alpha_M*z_M",
+    "final": "z_A = M + 0.20*s_E*Delta_E for every class",
+    "interaction": false,
+    "extra_deltaM_final": false,
+    "all_class_integration": true
+  },
+  "mvl": {
+    "epochs": 50,
+    "bottleneck": 256
+  },
+  "ento": {
+    "epochs": 12,
+    "fixed_epoch": 12,
+    "num_soft_regions": 4,
+    "region_dim": 256
+  },
+  "joint": {
+    "epochs": 12,
+    "alpha_E": 0.2,
+    "batch_size": 2,
+    "gradient_accumulation": 4,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "grad_clip": 0.5,
+    "scale_fit_images": 5394,
+    "official_eval_used_for_scale_or_selection": false
+  }
+}

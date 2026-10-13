@@ -1,10 +1,11 @@
 # ENTO–MVL
 
-Public implementation of the revised ENTO–MVL fine-grained recognition model.
+Official implementation of the ENTO–MVL model described in “Biologically Motivated Dual-Stage Feature Integration for Fine-Grained Visual Recognition.”  
+The final architecture uses all-class joint integration. No hard candidate-selection or class-restriction operation is used in the final prediction.
 
 ## Final architecture
 
-The implementation follows the revised manuscript and uses **all-class joint integration**. There is no hard class-candidate mask or re-ranking set in the final architecture.
+The implementation follows the final architecture described in the manuscript and uses **all-class joint integration**. There is no hard class-candidate mask or re-ranking set in the final architecture.
 
 - **ENTO-like:** ResNet-50 `layer2` feature map (`f2`, 512 channels) → four learned soft spatial regions → regional appearance representation → standalone ENTO-like classifier and bounded residual head `Delta_E`.
 - **MVL-like:** ResNet-50 `layer3` features → local-detail/statistical encoder → residual adapter → class evidence. The trained MVL-like source produces the complete class-score output `M`.
@@ -30,7 +31,7 @@ The default reproduction runner uses the manuscript seeds **666, 2026, and 7777*
 5. Freeze the trained MVL-like source and train the final ENTO–MVL residual pathway for 12 epochs.
 6. Fit `s_E` using training images only, then evaluate once on the official test split.
 
-The final joint-training code retains the auxiliary objectives used in the released all-class experiments: final classification loss, ENTO auxiliary classification, an OOF confuser margin, source-margin preservation, source-error repair, soft-region overlap regularization, and residual L2 regularization. None of these terms removes classes from the final decision space.
+The final joint-training code retains the auxiliary objectives used in the reported all-class experiments: final classification loss, ENTO auxiliary classification, an OOF confuser margin, source-margin preservation, source-error repair, soft-region overlap regularization, and residual L2 regularization. None of these terms removes classes from the final decision space.
 
 ## Reproduce the three-seed CUB experiment
 
